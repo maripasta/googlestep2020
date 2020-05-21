@@ -1,0 +1,42 @@
+import string
+from collections import defaultdict
+
+listdict = []
+with open('./dictionary.words', 'r') as f:
+    for line in f.readlines():
+        listdict += sorted(line.lower().strip().split(','))
+
+words = dict.fromkeys(string.ascii_lowercase)
+
+for alphabet in words.keys():
+    templist = []
+    for word in listdict:
+        if word[0] == alphabet:
+            templist.append(word)
+        else:
+            words[alphabet] = templist
+
+
+def findword(anagram):
+    longest_word = ''
+    for l in anagram.keys():
+        for w in words[l]:
+            if len(w) < len(longest_word):
+                continue
+            new_anagram = anagram.copy()
+            for i, letter in enumerate(w):
+                if new_anagram[letter] > 0:
+                    new_anagram[letter] -= 1                 
+                    if i == len(w)-1:
+                        if len(w) > len(longest_word):
+                            longest_word = w
+                else:
+                    break
+    return longest_word
+
+n = "qufrvobbxrmnvohnt"
+anagram = defaultdict(int)
+for letter in n:
+    anagram[letter] += 1
+        
+print(findword(anagram))

@@ -1,0 +1,37 @@
+import string
+from collections import defaultdict
+
+listdict = []
+with open('./dictionary.words', 'r') as f:
+    for line in f.readlines():
+        listdict += sorted(line.lower().strip().split(','))
+
+words = dict.fromkeys(string.ascii_lowercase)
+
+for alphabet in words.keys():
+    templist = []
+    for word in listdict:
+        if word[0] == alphabet:
+            templist.append(word)
+        else:
+            words[alphabet] = templist
+
+def decode_anagram(anagram, n):
+    for l in anagram.keys():
+        for w in words[l]:
+            if len(w) != len(anagram) or w == n:
+                continue
+            new_anagram = anagram.copy()
+            for letters in w:
+                if new_anagram[letters] > 0:
+                    new_anagram[letters] -= 1
+                    if sum(new_anagram.values()) == 0:
+                        return print(w)
+    return print('no anagram')
+
+n = "darc"
+anagram = defaultdict(int)
+for letter in n:
+    anagram[letter] += 1
+
+decode_anagram(anagram, n)
