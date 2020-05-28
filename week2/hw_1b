@@ -1,0 +1,12 @@
+#! /usr/bin/python3
+import matplotlib.pyplot as plt
+import homework1a as hw
+
+n_time = []
+n_size = [n for n in range(250)]
+
+for n in n_size:
+    n_time.append(hw.matrix_exec_time(n))
+
+plt.plot(n_size, n_time)
+plt.show()
