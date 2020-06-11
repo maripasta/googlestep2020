@@ -36,7 +36,6 @@ class Graph:
                         return path
         return dfs_recursive(self.node)
 
-
 #start from ID #1 (adrian) and end at ID #15 (cynthia)
 #get the ID of adrian and cynthia from file
 namedict = {}
